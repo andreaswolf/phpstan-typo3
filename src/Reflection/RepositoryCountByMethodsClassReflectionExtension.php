@@ -47,6 +47,10 @@ class RepositoryCountByMethodsClassReflectionExtension implements MethodsClassRe
 		$className = $classReflection->getName();
 		$modelName = $this->translateRepositoryNameToModelName($className);
 
+		if ($modelName === null) {
+			return false;
+		}
+
 		$modelReflection = $this->reflectionProvider->getClass($modelName);
 		return $modelReflection->hasProperty($propertyName);
 	}

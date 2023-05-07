@@ -51,6 +51,11 @@ class RepositoryFindMethodsClassReflectionExtension implements MethodsClassRefle
 		$className = $classReflection->getName();
 		$modelName = $this->translateRepositoryNameToModelName($className);
 
+		if ($modelName === null) {
+			// non-Extbase repository
+			return false;
+		}
+
 		$modelReflection = $this->reflectionProvider->getClass($modelName);
 		return $modelReflection->hasProperty($propertyName);
 	}
