@@ -46,7 +46,7 @@ class RepositoryQueryDynamicReturnTypeExtension implements DynamicMethodReturnTy
 			$variableType = $scope->getType($methodCall->var);
 
 			if (!$variableType instanceof TypeWithClassName) {
-				return new ErrorType();
+				return $queryType;
 			}
 
 			/** @var class-string $className */
@@ -57,8 +57,8 @@ class RepositoryQueryDynamicReturnTypeExtension implements DynamicMethodReturnTy
 			if ($modelName !== null) {
 				$modelType = [new ObjectType($modelName)];
 			} else {
-				// TODO check if this is correct
-				$modelType = [new MixedType(\false)];
+				// cannot infer type if no model name is known, leave original type intact
+				return $queryType;
 			}
 		}
 
