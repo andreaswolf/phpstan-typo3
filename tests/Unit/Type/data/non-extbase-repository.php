@@ -5,19 +5,27 @@ declare(strict_types=1);
 // phpcs:disable Squiz.Classes.ClassFileName.NoMatch
 // phpcs:disable PSR1.Classes.ClassDeclaration.MultipleClasses
 
-namespace CustomQueryType\My\Test\Extension\Domain\Repository;
+namespace CustomQueryType\My\Test\Extension\Domain\Model;
 
-use function PHPStan\Testing\assertType;
-
-class MyPlainRepository
-{
-	public function findBySomething()
-	{
-		return [];
-	}
+class MyPlainModel {
 }
 
-$repo = new MyPlainRepository();
+namespace CustomQueryType\My\Test\Extension\Domain\Repository;
 
-$result = $repo->findBySomething();
-assertType('array', $result);
+use CustomQueryType\My\Test\Extension\Domain\Model\MyPlainModel;
+use function PHPStan\Testing\assertType;
+
+class SomeClass
+{
+
+	public function findFooBySomething()
+	{
+		return new MyPlainModel();
+	}
+
+}
+
+$repo = new SomeClass();
+
+$result = $repo->findFooBySomething();
+assertType(MyPlainModel::class, $result);
